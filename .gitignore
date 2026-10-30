@@ -10,6 +10,9 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
+# L0 input with the budget alert email; only terraform.tfvars.example is committed.
+infra/bootstrap/terraform.tfvars
+
 # Python
 __pycache__/
 .venv/
