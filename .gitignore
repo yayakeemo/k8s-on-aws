@@ -1,0 +1,19 @@
+# Terraform working directories, state and plans never go into Git (AD-2: state lives in S3).
+.terraform/
+*.tfstate*
+*.tfplan
+tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Python
+__pycache__/
+.venv/
+
+# Local environment files
+.env
+.env.*

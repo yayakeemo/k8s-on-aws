@@ -1,0 +1,40 @@
+name: pr-plan
+
+# Runs on every PR to main. Story 1.3 adds the Terraform plan jobs to this same workflow
+# (the workflow list in docs/conventions.md is closed).
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-plan-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  components:
+    name: components (NFR-6 explainability check)
+    # Bot commits (chore(bot): ...) never trigger pr-plan (AD-25). The gate is the PR
+    # author, never the PR title: any human can type a chore(bot): title.
+    if: ${{ github.event.pull_request.user.login != 'github-actions[bot]' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.13.6"
+          python-version: "3.14"
+
+      - name: Unit tests
+        run: uv run --python 3.14 -m unittest discover -s scripts/tests -v
+
+      - name: Check docs/components.md lists every component
+        run: uv run --python 3.14 scripts/check_components.py

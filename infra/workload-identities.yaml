@@ -1,0 +1,24 @@
+# Workload identity registry (AD-21).
+#
+# This file is the ONLY list of in-cluster workloads that call AWS APIs.
+# - L2 (infra/ephemeral/core) creates one Pod Identity association and one IAM role
+#   (prefix `k8s-on-aws-eph-`) per entry.
+# - Every chart under gitops/ must render exactly these service account names;
+#   CI will check the rendered gitops/ against this registry; that check arrives with the
+#   story that adds Pod Identity (2.5) and does not exist yet.
+#
+# Schema: `identities` is a list of entries, each with exactly these fields:
+#   namespace       (string, required)  Kubernetes namespace of the workload, one of the
+#                                       namespaces in docs/conventions.md.
+#   serviceAccount  (string, required)  Name of the Kubernetes ServiceAccount the pods run as.
+#   policy          (string, required)  Path, relative to the repo root, of the IAM policy
+#                                       document (JSON) the role is granted. Least privilege.
+#
+# Example entry (illustrative only, not active):
+#
+#   identities:
+#     - namespace: external-dns
+#       serviceAccount: external-dns
+#       policy: infra/ephemeral/core/policies/external-dns.json
+
+identities: []
