@@ -7,15 +7,17 @@ This table covers only what survives Teardown (L0 and L1). Whatever the Persiste
 not use is the budget for Sessions (EKS, nodes, NAT, RDS, ALB while a Session runs).
 
 All figures are **estimates** from us-east-1 list prices, made before anything was deployed. The
-story that creates each item replaces its estimate with a measured or better-founded figure and
-changes its Status to `live`. Every new Persistent Footprint item adds a row here in the same PR.
+story that creates each item replaces its estimate with a measured or better-founded figure.
+Status moves from `planned` to `implemented` (code merged, not yet applied), then `live` once
+applied and measured. Every new Persistent Footprint item adds a row here in the same PR.
 
 | Item | Layer | Expected $/month | Basis | Status |
 | --- | --- | --- | --- | --- |
-| S3 state bucket (versioned, plus `evidence/`) | L0 | 0.05 | < 1 GB at $0.023/GB-month plus requests | planned (story 1.2) |
-| AWS Budgets ($30 actual, $45 forecast) | L0 | 0.00 | First two action-free budgets are free | planned (story 1.2) |
-| SNS topic for budget email | L0 | 0.00 | Email notifications within the SNS free tier | planned (story 1.2) |
-| SSM parameters (`/k8s-on-aws/...`) | L0, L1 | 0.00 | Standard-tier parameters are free | planned (story 1.2) |
+| S3 state bucket (versioned, plus `evidence/`) | L0 | 0.05 | < 1 GB at $0.023/GB-month plus requests | implemented (story 1.2) |
+| AWS Budgets ($30 actual, $45 forecast) | L0 | 0.00 | One budget, two notifications; the first two budgets are free | implemented (story 1.2) |
+| SNS topic for budget email | L0 | 0.00 | Email notifications within the SNS free tier | implemented (story 1.2) |
+| SSM parameters (`/k8s-on-aws/bootstrap/*`, `/k8s-on-aws/session/*`) | L0 | 0.00 | Standard-tier parameters are free | implemented (story 1.2) |
+| SSM parameters (`/k8s-on-aws/persistent/*`) | L1 | 0.00 | Standard-tier parameters are free | planned (story 1.4–1.6) |
 | Route 53 hosted zone | L1 | 0.50 | $0.50 per hosted zone; queries negligible | planned (story 1.4) |
 | Domain `yahiahussein.dev`, amortised | L1 | 1.25 | About $15/year `.dev` registration, divided by 12 | planned (story 1.4) |
 | Cognito user pool | L1 | 0.00 | A handful of users, inside the free MAU allowance | planned (story 1.5) |

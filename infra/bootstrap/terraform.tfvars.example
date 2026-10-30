@@ -1,0 +1,9 @@
+# Copy to terraform.tfvars (git-ignored) and fill in. Never commit terraform.tfvars.
+
+# Address that receives the AWS Budgets alerts. You confirm the SNS subscription email
+# once after the first apply (manual step 2 in docs/runbooks/bootstrap.md).
+alert_email = "<your email address>"
+
+# Defaults; override only if the repository moves.
+# github_owner = "yayakeemo"
+# github_repo  = "k8s-on-aws"

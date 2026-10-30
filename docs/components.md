@@ -31,3 +31,4 @@ Example (not a real row):
 
 | Component | Kind | Explained by |
 | --- | --- | --- |
+| `infra/bootstrap` | terraform root | [Bootstrap runbook](runbooks/bootstrap.md), [ADR-0001](adr/0001-bootstrap-layer.md) |
